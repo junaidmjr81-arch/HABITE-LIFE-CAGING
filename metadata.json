@@ -1,0 +1,6 @@
+{
+  "name": "HabitFlow",
+  "description": "Premium habit tracker dashboard with intelligent streak tracking, performance analytics, and customizable habits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
