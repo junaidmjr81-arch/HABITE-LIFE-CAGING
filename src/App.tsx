@@ -31,6 +31,7 @@ import { AddHabitModal } from './components/modals/AddHabitModal';
 import { EditHabitModal } from './components/modals/EditHabitModal';
 import { DayWorkUpdateModal } from './components/modals/DayWorkUpdateModal';
 import { ProfileManagerModal } from './components/modals/ProfileManagerModal';
+import { WorkShareModal } from './components/modals/WorkShareModal';
 
 import { HabitsView } from './components/views/HabitsView';
 import { StatisticsView } from './components/views/StatisticsView';
@@ -134,6 +135,7 @@ export default function App() {
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [isWorkUpdateModalOpen, setIsWorkUpdateModalOpen] = useState<boolean>(false);
   const [isProfileManagerOpen, setIsProfileManagerOpen] = useState<boolean>(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
   const [workUpdateHabitId, setWorkUpdateHabitId] = useState<string | null>(null);
 
   // Synchronize dark mode class on document element AND body
@@ -388,7 +390,7 @@ export default function App() {
         
         {/* Render Tab Views */}
         {activeTab === 'dashboard' && (
-          <div className="animate-fade-in space-y-2">
+          <div className="animate-fade-in space-y-2 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white/40 dark:bg-slate-900/30 p-4 sm:p-6 lg:p-8 shadow-xs backdrop-blur-[2px]">
             
             {/* 2. Welcome Section with Businessman Artwork & Switch Member action */}
             <WelcomeSection
@@ -398,6 +400,7 @@ export default function App() {
               userName={userProfile.name}
               onOpenWorkUpdate={() => handleOpenWorkUpdate()}
               onOpenProfileManager={() => setIsProfileManagerOpen(true)}
+              onOpenShare={() => setIsShareModalOpen(true)}
             />
 
             {/* 3. Performance Overview */}
@@ -413,6 +416,7 @@ export default function App() {
               totalCount={totalCount}
               currentStreak={currentStreak}
               onCompleteAllRemaining={handleCompleteAllRemaining}
+              onOpenShare={() => setIsShareModalOpen(true)}
             />
 
             {/* 5. Today's Habits with Instant Search & Check-in Time logs */}
@@ -447,6 +451,7 @@ export default function App() {
               onOpenQuickComplete={handleCompleteAllRemaining}
               onOpenWorkUpdate={() => handleOpenWorkUpdate()}
               onOpenProfileManager={() => setIsProfileManagerOpen(true)}
+              onOpenShare={() => setIsShareModalOpen(true)}
               setActiveTab={setActiveTab}
             />
 
@@ -545,6 +550,18 @@ export default function App() {
         onAddProfile={handleAddProfile}
         onUpdateProfile={handleUpdateProfile}
         onDeleteProfile={handleDeleteProfile}
+      />
+
+      {/* Comprehensive Work Share Modal (WhatsApp, Instagram, Mail, X, Telegram, etc.) */}
+      <WorkShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        userProfile={userProfile}
+        completedCount={completedCount}
+        totalCount={totalCount}
+        currentStreak={currentStreak}
+        habits={habits}
+        workHistory={workHistory}
       />
 
     </div>

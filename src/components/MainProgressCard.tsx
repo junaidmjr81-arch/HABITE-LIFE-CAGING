@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flame, CheckCircle2, Clock, Award, Sparkles, Zap, ChevronRight } from 'lucide-react';
+import { Flame, CheckCircle2, Clock, Award, Sparkles, Zap, ChevronRight, Share2, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface MainProgressCardProps {
@@ -7,13 +7,15 @@ interface MainProgressCardProps {
   totalCount: number;
   currentStreak: number;
   onCompleteAllRemaining?: () => void;
+  onOpenShare?: () => void;
 }
 
 export const MainProgressCard: React.FC<MainProgressCardProps> = ({
   completedCount,
   totalCount,
   currentStreak,
-  onCompleteAllRemaining
+  onCompleteAllRemaining,
+  onOpenShare
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -106,14 +108,26 @@ export const MainProgressCard: React.FC<MainProgressCardProps> = ({
                 Overall Completed
               </span>
 
-              {/* Subtle animated indicator */}
-              <button 
-                onClick={handleConfettiTrigger}
-                className="mt-2 flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold border border-emerald-200 dark:border-emerald-800 hover:scale-105 transition-transform cursor-pointer"
-              >
-                <Sparkles className="w-3 h-3 text-emerald-500 animate-spin-slow" />
-                <span>On Track</span>
-              </button>
+              {/* Subtle animated indicator & share button */}
+              <div className="mt-2 flex items-center space-x-1.5">
+                <button 
+                  onClick={handleConfettiTrigger}
+                  className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold border border-emerald-200 dark:border-emerald-800 hover:scale-105 transition-transform cursor-pointer"
+                >
+                  <Sparkles className="w-3 h-3 text-emerald-500 animate-spin-slow" />
+                  <span>On Track</span>
+                </button>
+                {onOpenShare && (
+                  <button
+                    onClick={onOpenShare}
+                    className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold border border-indigo-200 dark:border-indigo-800 hover:scale-105 transition-transform cursor-pointer shadow-xs"
+                    title="Share daily work & progress (WhatsApp, Instagram, Mail)"
+                  >
+                    <Share2 className="w-3 h-3 text-indigo-500" />
+                    <span>Share</span>
+                  </button>
+                )}
+              </div>
             </div>
 
           </div>
@@ -221,6 +235,58 @@ export const MainProgressCard: React.FC<MainProgressCardProps> = ({
               </button>
             </div>
           )}
+
+          {/* Work Share Options Toolbar */}
+          <div className="pt-3 border-t border-gray-100 dark:border-gray-800/80 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center space-x-1.5 mr-1">
+                <Share2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Share Work & Progress:</span>
+              </span>
+              
+              {/* Quick direct platform buttons */}
+              <button
+                type="button"
+                onClick={onOpenShare}
+                className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer hover:scale-105"
+                title="Share work to WhatsApp"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>WhatsApp</span>
+              </button>
+              
+              <button
+                type="button"
+                onClick={onOpenShare}
+                className="px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-700 dark:text-pink-300 border border-pink-500/20 text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer hover:scale-105"
+                title="Share work to Instagram"
+              >
+                <span className="w-2 h-2 rounded-full bg-pink-500"></span>
+                <span>Instagram</span>
+              </button>
+              
+              <button
+                type="button"
+                onClick={onOpenShare}
+                className="px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/20 text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer hover:scale-105"
+                title="Send work report by Email"
+              >
+                <Mail className="w-3 h-3 text-blue-500" />
+                <span>Mail / Email</span>
+              </button>
+            </div>
+
+            {onOpenShare && (
+              <button
+                type="button"
+                onClick={onOpenShare}
+                className="px-3.5 py-1.5 rounded-xl bg-gray-900 hover:bg-black dark:bg-gray-800 dark:hover:bg-gray-700 text-white text-xs font-extrabold shadow-sm flex items-center space-x-1.5 transition-all hover:scale-105 cursor-pointer ml-auto"
+              >
+                <Share2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Full Share Options...</span>
+              </button>
+            )}
+          </div>
 
         </div>
 

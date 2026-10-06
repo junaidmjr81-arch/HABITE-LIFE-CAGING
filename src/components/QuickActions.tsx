@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, CheckCircle2, BarChart3, Calendar, Zap, FileText, Users, Briefcase } from 'lucide-react';
+import { Plus, CheckCircle2, BarChart3, Calendar, Zap, FileText, Users, Briefcase, Share2 } from 'lucide-react';
 import { NavigationTab } from '../types';
 
 interface QuickActionsProps {
@@ -7,6 +7,7 @@ interface QuickActionsProps {
   onOpenQuickComplete?: () => void;
   onOpenWorkUpdate?: () => void;
   onOpenProfileManager?: () => void;
+  onOpenShare?: () => void;
   setActiveTab: (tab: NavigationTab) => void;
 }
 
@@ -15,9 +16,22 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   onOpenQuickComplete,
   onOpenWorkUpdate,
   onOpenProfileManager,
+  onOpenShare,
   setActiveTab,
 }) => {
   const actions = [
+    {
+      id: 'share-work',
+      title: 'Share Work Progress',
+      description: 'Share today’s accomplishments to WhatsApp, Instagram, Email, X & more',
+      icon: <Share2 className="w-5 h-5" />,
+      color: 'from-emerald-500 to-teal-600',
+      textColor: 'text-emerald-600 dark:text-emerald-400',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-950/80',
+      borderColor: 'hover:border-emerald-500',
+      onClick: onOpenShare || onOpenWorkUpdate || onOpenAddHabit,
+      badge: 'WhatsApp • IG'
+    },
     {
       id: 'work-up-page',
       title: 'WORK UP Hub',

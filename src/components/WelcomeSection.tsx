@@ -11,7 +11,8 @@ import {
   Sunset, 
   Moon, 
   Edit3,
-  CheckCircle2
+  CheckCircle2,
+  Share2
 } from 'lucide-react';
 import businessmanImg from '../assets/images/businessman_journal_1786685883646.jpg';
 
@@ -22,6 +23,7 @@ interface WelcomeSectionProps {
   userName?: string;
   onOpenWorkUpdate?: () => void;
   onOpenProfileManager?: () => void;
+  onOpenShare?: () => void;
 }
 
 const MOTIVATIONAL_QUOTES = [
@@ -40,6 +42,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
   userName = "Alex",
   onOpenWorkUpdate,
   onOpenProfileManager,
+  onOpenShare,
 }) => {
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [timeMode, setTimeMode] = useState<'morning' | 'afternoon' | 'evening'>('morning');
@@ -99,7 +102,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
   const currentGreeting = getGreetingData();
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-teal-800 to-cyan-900 dark:from-emerald-950 dark:via-gray-900 dark:to-teal-950 rounded-3xl text-white p-6 sm:p-8 shadow-xl mb-8 border border-emerald-600/30">
+    <div className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-teal-800 to-cyan-900 dark:from-emerald-950 dark:via-gray-900 dark:to-teal-950 rounded-3xl text-white p-6 sm:p-8 shadow-xl mb-8 border border-emerald-500/30 dark:border-emerald-400/20">
       
       {/* Decorative ambient blurred blobs */}
       <div className="absolute -top-12 -right-12 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
@@ -192,9 +195,9 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
             </p>
           </div>
 
-          {/* One-Day Work Update CTA Button */}
-          {onOpenWorkUpdate && (
-            <div className="pt-1 flex flex-wrap items-center gap-3">
+          {/* One-Day Work Update & Work Share CTA Buttons */}
+          <div className="pt-1 flex flex-wrap items-center gap-3">
+            {onOpenWorkUpdate && (
               <button
                 type="button"
                 onClick={onOpenWorkUpdate}
@@ -203,12 +206,27 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
                 <Edit3 className="w-3.5 h-3.5 text-emerald-700" />
                 <span>One-Day Work Update & Time Log</span>
               </button>
-              
-              <span className="text-xs text-emerald-200/80 font-medium">
-                {completedCount}/{totalCount} habits completed today
-              </span>
-            </div>
-          )}
+            )}
+
+            {onOpenShare && (
+              <button
+                type="button"
+                onClick={onOpenShare}
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-emerald-500/25 hover:bg-emerald-500/40 text-white border border-emerald-300/40 backdrop-blur-md text-xs font-extrabold shadow-lg shadow-black/10 transition-all hover:scale-105 cursor-pointer group"
+                title="Share work to WhatsApp, Instagram, Mail, etc."
+              >
+                <Share2 className="w-3.5 h-3.5 text-emerald-200 group-hover:rotate-12 transition-transform" />
+                <span>Share Work</span>
+                <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-bold text-white">
+                  WhatsApp • IG • Mail
+                </span>
+              </button>
+            )}
+            
+            <span className="text-xs text-emerald-200/80 font-medium">
+              {completedCount}/{totalCount} habits completed today
+            </span>
+          </div>
 
           {/* Motivational Quote Box */}
           <div className="pt-3 border-t border-white/10 flex items-start space-x-3 text-emerald-100/80 text-xs sm:text-sm">
